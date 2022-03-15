@@ -1,0 +1,63 @@
+# Create Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bookstore 
+
+---
+
+# Create bookstore Service Account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookstore
+  namespace: bookstore
+
+---
+
+# Create bookstore Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore
+  namespace: bookstore
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      serviceAccountName: bookstore
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        kubernetes.io/os: linux
+      containers:
+        - name: bookstore
+          image: 0gis0/bookstore
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: web
+
+---
+
+# Create bookstore Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookstore
+  namespace: bookstore
+  labels:
+    app: bookstore
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 3000
+    name: bookstore-port
+  selector:
+    app: bookstore

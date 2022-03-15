@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <main>
+        <div class="px-4 py-5 my-5 text-center">
+            <img class="d-block mx-auto mb-4" src="images/bookstore.png" alt="" width="72" height="57">
+            <h1 class="display-5 fw-bold">Bookstore</h1>
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">
+                    <%- booksSold %> books sold 💰</p>
+                <!-- <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Refresh</button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Reset</button>
+                </div> -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Script to refresh page every 3 minutes -->
+    <script>
+        setInterval(function() {
+            location.reload();
+        }, 1500);
+    </script>
+
+
+</body>
+
+</html>

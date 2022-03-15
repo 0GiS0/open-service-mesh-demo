@@ -1,0 +1,60 @@
+# Create Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bookthief
+  
+---
+
+# Create bookthief ServiceAccount
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookthief
+  namespace: bookthief
+
+---
+
+# Create bookthief Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookthief
+  namespace: bookthief
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookthief
+  template:
+    metadata:
+      labels:
+        app: bookthief
+        version: v1
+    spec:
+      serviceAccountName: bookthief     
+      containers:
+        - name: bookthief
+          image: 0gis0/bookthief
+          imagePullPolicy: Always
+          env:
+            - name: BOOKSTORE_URL
+              value: http://bookstore.bookstore.svc.cluster.local
+---
+
+# Create bookthief Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookthief
+  namespace: bookthief
+  labels:
+    app: bookthief
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 4001
+    name: bookthief-port
+  selector:
+    app: bookthief

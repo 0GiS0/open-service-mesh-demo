@@ -1,0 +1,59 @@
+# Create Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bookbuyer
+
+---
+# Create bookbuyer Service Account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookbuyer
+  namespace: bookbuyer
+
+---
+# Create bookbuyer Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookbuyer
+  namespace: bookbuyer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookbuyer
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: bookbuyer
+        version: v1
+    spec:
+      serviceAccountName: bookbuyer
+      containers:
+        - name: bookbuyer
+          image: 0gis0/bookbuyer
+          imagePullPolicy: Always
+          env:
+            - name: BOOKSTORE_URL
+              value: http://bookstore.bookstore.svc.cluster.local
+
+---
+# Create bookbuyer Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookbuyer
+  namespace: bookbuyer
+  labels:
+    app: bookbuyer
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 4000
+      name: bookbuyer-port
+  selector:
+    app: bookbuyer
