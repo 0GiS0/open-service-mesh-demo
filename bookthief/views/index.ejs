@@ -20,20 +20,37 @@
             <div class="col-lg-6 mx-auto">
                 <!-- if error -->
                 <% if (error !="" ) { %>
-                    <p class="lead mb-4">
-                        <%- booksSold %> books sold.
-                    </p>
-                    <div class="alert alert-danger" role="alert">
-                        <%- error %>
-                    </div>
-                    <% }else { %>
+                    <% if (booksSold) { %>
                         <p class="lead mb-4">
                             <%- booksSold %> books sold 💰
                         </p>
-                        <p class="lead mb-4">
-                            <%- booksStolen %> books stolen 🥷🏻
-                        </p>
                         <% } %>
+                            <% if (moviesSold) { %>
+                                <p class="lead mb-4">
+                                    <%- moviesSold %> movies sold 💰
+                                </p>
+                                <% } %>
+                                    <div class="alert alert-danger" role="alert">
+                                        <%- error %>
+                                    </div>
+
+                                    <% }else { %>
+                                        <% if (booksSold) { %>
+                                            <p class="lead mb-4">
+                                                <%- booksSold %> books sold 💰
+                                            </p>
+                                            <% } %>
+                                                <% if (moviesSold) { %>
+                                                    <p class="lead mb-4">
+                                                        <%- moviesSold %> movies sold 💰
+                                                    </p>
+                                                    <% } %>
+                                                        <% if (booksStolen) { %>
+                                                            <p class="lead mb-4">
+                                                                <%- booksStolen %> books stolen 🥷🏻
+                                                            </p>
+                                                            <% } %>
+                                                                <% } %>
 
             </div>
         </div>

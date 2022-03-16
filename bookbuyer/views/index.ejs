@@ -24,10 +24,17 @@
                         <%- error %>
                     </div>
                     <% }else { %>
-                        <p class="lead mb-4">
-                            <%- booksSold %> books sold 💰
-                        </p>
-                        <% } %>
+                        <% if (booksSold) { %>
+                            <p class="lead mb-4">
+                                <%- booksSold %> books sold 💰
+                            </p>
+                            <% } %>
+                                <% if (moviesSold) { %>
+                                    <p class="lead mb-4">
+                                        <%- moviesSold %> movies sold 💰
+                                    </p>
+                                    <% } %>
+                                        <% } %>
 
             </div>
         </div>

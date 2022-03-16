@@ -22,22 +22,34 @@ app.get('/', (req, res) => {
     axios.get(`${API_URL}/api/steal`).then(response => {
             let booksStolen = response.data.booksStolen;
 
-            console.log(`Book sold: ${booksStolen}`);
+            console.log(`Book stolen: ${booksStolen}`);
 
             axios.get(`${API_URL}/api/buy`).then(response => {
+
                 let booksSold = response.data.booksSold;
-                res.render('index', { booksSold, booksStolen, error: "" });
+                let moviesSold = response.data.moviesSold;
+
+                console.log(`Books sold: ${booksSold}`);
+                console.log(`Movies sold: ${moviesSold}`);
+
+                res.render('index', { booksSold, moviesSold, booksStolen, error: "" });
 
             });
 
         })
         .catch(error => {
-            console.log(error);
+            console.dir(error);
 
-            if (error.response.status === 404) {
+            if (error.response && error.response.status === 404) {
                 axios.get(`${API_URL}/api/buy`).then(response => {
+
                     let booksSold = response.data.booksSold;
-                    res.render('index', { booksSold, booksStolen: null, error: "You cannot steal more books!" });
+                    let moviesSold = response.data.moviesSold;
+
+                    console.log(`Books sold: ${booksSold}`);
+                    console.log(`Movies sold: ${moviesSold}`);
+
+                    res.render('index', { booksSold, moviesSold, booksStolen: null, error: "You cannot steal more books!" });
 
                 });
 

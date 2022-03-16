@@ -2,39 +2,64 @@ kind: TrafficTarget
 apiVersion: access.smi-spec.io/v1alpha3
 metadata:
   name: bookstore
-  namespace: bookstore
+  namespace: stores
 spec:
   destination:
     kind: ServiceAccount
     name: bookstore
-    namespace: bookstore
+    namespace: stores
   sources:
-  - kind: ServiceAccount
-    name: bookbuyer
-    namespace: bookbuyer
-  - kind: ServiceAccount
-    name: bookthief
-    namespace: bookthief
+    - kind: ServiceAccount
+      name: bookbuyer
+      namespace: bookbuyer
+    - kind: ServiceAccount
+      name: bookthief
+      namespace: bookthief
   rules:
-  - kind: HTTPRouteGroup
-    name: bookstore-service-routes
-    matches:
-    - buy-books
-    - steal-books
+    - kind: HTTPRouteGroup
+      name: stores-service-routes
+      matches:
+        - buy
+        # - steal
+
+---
+
+kind: TrafficTarget
+apiVersion: access.smi-spec.io/v1alpha3
+metadata:
+  name: moviestore
+  namespace: stores
+spec:
+  destination:
+    kind: ServiceAccount
+    name: moviestore
+    namespace: stores
+  sources:
+    - kind: ServiceAccount
+      name: bookbuyer
+      namespace: bookbuyer
+    - kind: ServiceAccount
+      name: bookthief
+      namespace: bookthief
+  rules:
+    - kind: HTTPRouteGroup
+      name: stores-service-routes
+      matches:
+        - buy
 
 ---
 apiVersion: specs.smi-spec.io/v1alpha4
 kind: HTTPRouteGroup
 metadata:
-  name: bookstore-service-routes
-  namespace: bookstore
+  name: stores-service-routes
+  namespace: stores
 spec:
-  matches:  
-  - name: buy-books
-    pathRegex: "/api/buy"    
-    methods:
-    - GET
-  - name: steal-books
-    pathRegex: "/api/steal"
-    methods:
-    - GET
+  matches:
+    - name: buy
+      pathRegex: "/api/buy"
+      methods:
+        - GET
+    - name: steal
+      pathRegex: "/api/steal"
+      methods:
+        - GET

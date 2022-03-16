@@ -1,11 +1,3 @@
-# Create Namespace
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: bookthief
-  
----
-
 # Create bookthief ServiceAccount
 apiVersion: v1
 kind: ServiceAccount
@@ -39,7 +31,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: BOOKSTORE_URL
-              value: http://bookstore.bookstore.svc.cluster.local
+              value: http://bookstore.stores
 ---
 
 # Create bookthief Service
@@ -51,7 +43,6 @@ metadata:
   labels:
     app: bookthief
 spec:
-  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 4001

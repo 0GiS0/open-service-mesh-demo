@@ -19,13 +19,17 @@ app.get('/', (req, res) => {
 
     // Call the bookstore api to buy a book
     axios.get(`${API_URL}/api/buy`).then(response => {
+
             let booksSold = response.data.booksSold;
+            let moviesSold = response.data.moviesSold;
 
-            console.log(`Book sold: ${booksSold}`);
+            console.log(`Books sold: ${booksSold}`);
+            console.log(`Movies sold: ${moviesSold}`);
 
-            res.render('index', { booksSold, error: "" });
+            res.render('index', { booksSold, moviesSold, error: "" });
         })
         .catch(error => {
+
             console.log(error);
 
             res.render('index', { booksSold: null, error });

@@ -1,54 +1,50 @@
-# Create bookstore Service Account
+# Create moviestore Service Account
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: bookstore
+  name: moviestore
   namespace: stores
 
 ---
 
-# Create bookstore Deployment
+# Create moviestore Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bookstore
+  name: moviestore
   namespace: stores
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bookstore
+      app: moviestore
   template:
     metadata:
       labels:
-        app: bookstore        
+        app: moviestore        
     spec:
-      serviceAccountName: bookstore
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        kubernetes.io/os: linux
+      serviceAccountName: moviestore    
       containers:
-        - name: bookstore
-          image: 0gis0/bookstore
+        - name: moviestore
+          image: 0gis0/moviestore
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
               name: web
-
 ---
 
-# Create bookstore Service
+# Create moviestore Service
 apiVersion: v1
 kind: Service
 metadata:
-  name: bookstore
+  name: moviestore
   namespace: stores
   labels:
-    app: bookstore
-spec:
+    app: moviestore
+spec:  
   ports:
   - port: 80
     targetPort: 3000
-    name: bookstore-port
+    name: moviestore-port
   selector:
-    app: bookstore
+    app: moviestore

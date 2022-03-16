@@ -1,21 +1,21 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: bookstore-ingress
+  name: moviestore-ingress
   namespace: stores
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: bookstore.<PUBLIC_IP_INGRESS>.nip.io
+    - host: moviestore.<PUBLIC_IP_INGRESS>.nip.io
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: bookstore
+                name: moviestore
                 port:
                   number: 80
 
@@ -24,11 +24,11 @@ spec:
 kind: IngressBackend
 apiVersion: policy.openservicemesh.io/v1alpha1
 metadata:
-  name: bookstore-external-access
+  name: moviestore-external-access
   namespace: stores
 spec:
   backends:
-    - name: bookstore
+    - name: moviestore
       port:
         number: 3000 # targetPort of the service
         protocol: http

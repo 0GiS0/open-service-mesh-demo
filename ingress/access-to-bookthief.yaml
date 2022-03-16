@@ -1,14 +1,14 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: osm-ingress
+  name: bookthief-ingress
   namespace: bookthief
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: bookthief.<INGRESS_PUBLIC_IP>.nip.io
+    - host: bookthief.<PUBLIC_IP_INGRESS>.nip.io
       http:
         paths:
           - path: /

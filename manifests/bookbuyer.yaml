@@ -1,10 +1,3 @@
-# Create Namespace
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: bookbuyer
-
----
 # Create bookbuyer Service Account
 apiVersion: v1
 kind: ServiceAccount
@@ -38,7 +31,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: BOOKSTORE_URL
-              value: http://bookstore.bookstore.svc.cluster.local
+              value: http://bookstore.stores
 
 ---
 # Create bookbuyer Service
@@ -50,7 +43,6 @@ metadata:
   labels:
     app: bookbuyer
 spec:
-  type: LoadBalancer
   ports:
     - port: 80
       targetPort: 4000

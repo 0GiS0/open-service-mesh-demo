@@ -18,8 +18,7 @@ app.listen(PORT, () => {
 // GET /
 // Returns a index.html file with the booksSold variable
 app.get('/', (req, res) => {
-    // res.sendFile(__dirname + '/index.html');
-    res.render('index', { booksSold });
+    res.render('index', { booksSold, booksStolen });
 });
 
 // GET /api/buy
